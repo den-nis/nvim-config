@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 return {
 	{
 		"nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
@@ -84,5 +85,30 @@ return {
 			vim.api.nvim_create_user_command('Docs', docs_cmd, {nargs = 0, desc = "Show signature help"})
 
 		end
-    	}
+    	},
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local harpoon = require("harpoon")
+			harpoon:setup()
+
+			vim.keymap.set("n", "<leader>a", function()
+				harpoon:list():append()
+				vim.print("Added to harpoon list (open list with <C-e>)")
+			end)
+			vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+			vim.keymap.set("n", "<C-0>", function() harpoon:list():select(1) end)
+			vim.keymap.set("n", "<C-9>", function() harpoon:list():select(2) end)
+			vim.keymap.set("n", "<C-8>", function() harpoon:list():select(3) end)
+			vim.keymap.set("n", "<C-7>", function() harpoon:list():select(4) end)
+
+			-- Toggle previous & next buffers stored within Harpoon list
+			vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+			vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+		end
+	}
 }

@@ -14,9 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
--- Setup theme
-vim.print('Dennis\'s vim config')
-
 -- fix letters LSP
 vim.opt.signcolumn = 'yes'
 
